@@ -1,22 +1,21 @@
 <template>
-  <div 
-    class="tree-node"
+  <div class="tree-node">
+    <div
+      :class="nodeClasses"
+      @click="isSelect"
     >
-    <a
-      v-if="type === 'link'"
-      :href="target"
-      class="link"
-      @click="selected($event.target)"
-    >
-      {{name}}
-    </a>
-    <span
-      v-else
-      class="file"
-      @click="selected($event.target)"
-    >
-      {{name}}
-    </span>
+      <a
+        v-if="type === 'link'"
+        :href="target"
+      >
+        {{name}}
+      </a>
+      <span
+        v-else
+      >
+        {{name}}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -24,6 +23,10 @@
 
 export default {
   name: 'File',
+  data: () => ({
+    selected: false,
+    selectedPath: ''
+  }),
   props: {
     type: {
       type: String,
@@ -36,14 +39,32 @@ export default {
     target: {
       type: String,
       default: 'target'
+    },
+    parentPath: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    nodeClasses() {
+      return [{
+        'selected': this.selected,
+        'link': this.type === 'link',
+        'file': this.type === 'file',
+      }]
+    },
+    path() {
+      return this.parentPath + "/" + this.name
     }
   },
   methods: {
-    selected: function(elem) {
-      let range = document.createRange();
-      range.selectNode(elem);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
+    isSelect() {
+      this.selected = !this.selected;
+      let newPath = '';
+      (this.selected) ? newPath = this.path : newPath = this.parentPath
+      this.$emit('isSelect', {
+        path: newPath
+      });
     }
   }
 }
@@ -51,15 +72,31 @@ export default {
 
 <style scoped>
 .tree-node {
+  padding-top: 15px;
+  padding-bottom: 0;
   cursor: default;
 }
 .link,
 .file {
-  margin-left: 15px;
+  padding: 10px 15px;
   cursor: pointer;
+  border-radius: 6px;
+  display: block;
+  transition: 0.2s;
 }
-.link {
+.link a {
   color: #2c3e50;
   text-decoration: underline;
+}
+.file.selected {
+  background: #1B4965;
+  color: #fff;
+}
+.link.selected {
+  background: #F18F01;
+  color: #fff;
+} 
+.link.selected a {
+  color: #fff;
 }
 </style>

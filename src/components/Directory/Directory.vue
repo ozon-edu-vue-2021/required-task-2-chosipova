@@ -9,6 +9,8 @@
     <tree-children 
       v-if="opened"
       :children="contents"
+      :parentPath="parentPath + '/' + name"
+      :filePath="filePath"
     />
   </div>
 </template>
@@ -17,12 +19,12 @@
 
   export default {
     name: 'Directory',
-    beforeCreate: function () {
-      this.$options.components.TreeChildren = require("../TreeChildren/TreeChildren.vue").default;
-      this.$options.components.DirectoryTitle = require(".//DirectoryTitle.vue").default;
+    components: {
+      TreeChildren: () => import('../TreeChildren/TreeChildren.vue'),
+      DirectoryTitle: () => import('./DirectoryTitle.vue')
     },
     data: () => ({
-        opened: false
+      opened: false,
     }),
     props: {
       name: {
@@ -36,11 +38,29 @@
       contents: {
         type: Array,
         default: () => ([])
+      },
+      parentPath: {
+        type: String,
+        default: ''
+      },
+      filePath: {
+        type: Function,
+        required: true
+      }
+    },
+    computed: {
+      path() {
+        return this.parentPath + "/" + this.name
       }
     },
     methods: {
       toggle() {
         this.opened = !this.opened;
+        let newPath = '';
+        (this.opened) ? newPath = this.path : newPath = this.parentPath
+        this.$emit('isSelect', {
+          path: newPath
+        });
       }
     }
   }

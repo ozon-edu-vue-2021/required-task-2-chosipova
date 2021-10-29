@@ -13,8 +13,8 @@
 <script>
 export default {
   name: 'DirectoryTitle',
-  beforeCreate: function () {
-      this.$options.components.ArrowIcon = require("../ArrowIcon/ArrowIcon.vue").default;
+  components: {
+      ArrowIcon: () => import('../ArrowIcon/ArrowIcon.vue')
     },
   props: {
     name: {
@@ -36,5 +36,8 @@ export default {
     border-radius: 6px;
     cursor: pointer;
     user-select: none;
+  }
+  .directory-title:focus {
+    border-color: red;
   }
 </style>

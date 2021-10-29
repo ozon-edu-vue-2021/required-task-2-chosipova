@@ -1,9 +1,17 @@
 <template>
   <div id="app">
+    <show-path
+      v-show = "sectedPath.length"
+      :path="sectedPath"
+    >
+    </show-path>
     <directory
       :name="tree.name"
       :type="tree.type"
       :contents="tree.contents"
+      :parentPath="''"
+      :filePath = "filePath"
+      @isSelect="filePath"
       class="root-directory">
     </directory>
   </div>
@@ -12,15 +20,23 @@
 <script>
 import tree from "../public/static/node_modules.json"
 import Directory from "./components/Directory/Directory.vue"
+import ShowPath from "./components/ShowPath/ShowPath.vue"
 
 export default {
   name: 'App',
   components: {
-    Directory
+    Directory,
+    ShowPath
   },
   data: () => ({
-    tree
-  })
+    tree,
+    sectedPath: ''
+  }),
+  methods: {
+    filePath (data) {
+      this.sectedPath = data.path;
+    }
+  }
 }
 </script>
 
@@ -33,7 +49,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   max-width: 875px;
-  margin: 0 auto;
+  margin: 75px auto 0;
   padding: 20px 15px;
 }
 .tree-node {
