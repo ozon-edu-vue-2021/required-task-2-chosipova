@@ -9,7 +9,7 @@
     <tree-children 
       v-if="opened"
       :children="contents"
-      :parentPath="parentPath + '/' + name"
+      :parentPath="path"
       :filePath="filePath"
     />
   </div>
