@@ -1,5 +1,5 @@
 <template>
-  <div class="tree-node">
+  <div class="tree-node" :id="id">
     <div
       :class="nodeClasses"
       @click="isSelect"
@@ -21,12 +21,10 @@
 
 <script>
 
+const uniqueId = require('lodash.uniqueid');
+
 export default {
   name: 'File',
-  data: () => ({
-    selected: false,
-    selectedPath: ''
-  }),
   props: {
     type: {
       type: String,
@@ -53,17 +51,22 @@ export default {
         'file': this.type === 'file',
       }]
     },
+    id() {
+      return uniqueId('id')
+    },
+    selected() {
+      return this.id === this.getCurrentFileId()
+    },
     path() {
       return this.parentPath + "/" + this.name
     }
   },
+  inject: ['getCurrentFileId'],
   methods: {
     isSelect() {
-      this.selected = !this.selected;
-      let newPath = '';
-      (this.selected) ? newPath = this.path : newPath = this.parentPath
       this.$emit('isSelect', {
-        path: newPath
+        path: this.path,
+        id: this.id
       });
     }
   }

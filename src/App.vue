@@ -30,11 +30,21 @@ export default {
   },
   data: () => ({
     tree,
-    sectedPath: ''
+    sectedPath: '',
+    currentFileId: ''
   }),
   methods: {
     filePath (data) {
       this.sectedPath = data.path;
+      this.currentFileId = data.id;
+    },
+    getCurrentFileId() {
+      return this.currentFileId;
+    }
+  },
+  provide: function () {
+    return {
+      getCurrentFileId: this.getCurrentFileId
     }
   }
 }
