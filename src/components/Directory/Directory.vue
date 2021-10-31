@@ -1,12 +1,15 @@
 <template>
   <div 
-    class="tree-node"
+    class="tree-node" 
     >
     <directory-title
-      :name = "name"
+      :tabindex="1"
+      :name = "name"  
       @click="toggle"
+      @keyup.enter="toggle"
     />
-    <tree-children 
+    <tree-children
+      ref="dir"
       v-if="opened"
       :children="contents"
       :parentPath="path"
@@ -16,7 +19,6 @@
 </template>
 
 <script>
-
   export default {
     name: 'Directory',
     components: {

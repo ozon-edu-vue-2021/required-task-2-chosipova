@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app"
+    @keyup.down="nextItem"
+    @keyup.up="prevItem"
+    tabindex="1">
     <show-path
       v-show = "sectedPath.length"
       :path="sectedPath"
@@ -12,7 +15,8 @@
       :parentPath="''"
       :filePath = "filePath"
       @isSelect="filePath"
-      class="root-directory">
+      class="root-directory"
+      >
     </directory>
   </div>
 </template>
@@ -33,6 +37,11 @@ export default {
     sectedPath: '',
     currentFileId: ''
   }),
+  computed: {
+    currentItemId() {
+      return this.$refs.rootDir
+    }
+  },
   methods: {
     filePath (data) {
       this.sectedPath = data.path;
@@ -40,12 +49,35 @@ export default {
     },
     getCurrentFileId() {
       return this.currentFileId;
+    },
+    nextItem() {
+      let tabIndexElems = document.querySelectorAll('[tabindex="1"]'),
+          currentItem = document.activeElement,
+          currentItemId = [].indexOf.call(tabIndexElems, currentItem),
+          nextItemId = ++currentItemId,
+          nextItem = tabIndexElems[nextItemId];
+      if (nextItem) {
+        nextItem.focus();
+      }
+    },
+    prevItem() {
+      let tabIndexElems = document.querySelectorAll('[tabindex="1"]'),
+          currentItem = document.activeElement,
+          currentItemId = [].indexOf.call(tabIndexElems, currentItem),
+          prevItemId = --currentItemId,
+          prevItem = tabIndexElems[prevItemId];
+        if (prevItem) {
+          prevItem.focus();
+        } 
     }
   },
   provide: function () {
     return {
       getCurrentFileId: this.getCurrentFileId
     }
+  },
+  mounted() {
+    this.$el.focus();
   }
 }
 </script>
@@ -61,6 +93,12 @@ export default {
   max-width: 875px;
   margin: 75px auto 0;
   padding: 20px 15px;
+  border-radius: 6px;
+}
+#app:focus,
+#app:focus-visible {
+  background: #F4F4F8;
+  outline: 0;
 }
 .tree-node {
   display: block;

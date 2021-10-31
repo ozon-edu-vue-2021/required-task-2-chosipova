@@ -1,8 +1,11 @@
 <template>
-  <div class="tree-node" :id="id">
+  <div class="tree-node" >
     <div
       :class="nodeClasses"
+      :tabindex="1"
+      :id="id"
       @click="isSelect"
+      @keyup.enter="isSelect" 
     >
       <a
         v-if="type === 'link'"
@@ -85,7 +88,7 @@ export default {
   cursor: pointer;
   border-radius: 6px;
   display: block;
-  transition: 0.2s;
+  border: 2px solid #fff;
 }
 .link a {
   color: #2c3e50;
@@ -93,13 +96,30 @@ export default {
 }
 .file.selected {
   background: #1B4965;
+  border: 2px solid #1B4965;
   color: #fff;
 }
 .link.selected {
   background: #F18F01;
+  border: 2px solid #F18F01;
   color: #fff;
 } 
 .link.selected a {
   color: #fff;
 }
+.file:focus,
+.file:focus-visible,
+.link:focus,
+.link:focus-visible {
+  border: 2px solid #CE2D4F;
+  outline: 0;
+}
+.file.selected:focus,
+.file.selected:focus-visible {
+  border: 2px solid #1B4965;;
+}
+.link.selected:focus,
+.link.selected:focus-visible {
+  border: 2px solid #F18F01;
+} 
 </style>

@@ -37,7 +37,9 @@ export default {
     cursor: pointer;
     user-select: none;
   }
-  .directory-title:focus {
-    border-color: red;
+  .directory-title:focus,
+  .directory-title:focus-visible {
+    border: 2px solid #CE2D4F;
+    outline: 0;
   }
 </style>
