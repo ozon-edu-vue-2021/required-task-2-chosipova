@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "lodash.uniqueid": "^4.0.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {
@@ -38,5 +39,17 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "description": "1) Ознакомьтесь с материалом лекций недели\r 2) Ознакомьтесь с материалами воркшопа\r 3) Ознакомьтесь с заданием\r 4) Создайте ветку `feature/…` и выполните задание в ней\r 5) Подготовьте PR из ветки `feature/…` в ветку `main`\r 6) Найдите в таблице прогресса своего тьютора\r 7) Отправьте личным сообщением своему тьютору ссылку на созданный PR",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozon-edu-vue-2021/homework-2-chosipova.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ozon-edu-vue-2021/homework-2-chosipova/issues"
+  },
+  "homepage": "https://github.com/ozon-edu-vue-2021/homework-2-chosipova#readme"
 }
